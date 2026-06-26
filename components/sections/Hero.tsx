@@ -14,8 +14,8 @@ export function Hero() {
     <section id="accueil" className="relative">
       <ScrollExpandMedia
         mediaType="image"
-        bgImageSrc="/images/exterieur.jpg"
-        mediaSrc="/images/plat.jpg"
+        bgImageSrc="https://media-cdn.tripadvisor.com/media/photo-o/0e/18/a1/a3/plateau-de-fruits-du.jpg"
+        mediaSrc="https://foto1.sluurpy.com/locali/ch/6983402/16275372.jpg"
         title="Le Panda"
         date="Leytron · Valais"
         scrollToExpand="Faites défiler pour découvrir"

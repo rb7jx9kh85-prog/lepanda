@@ -1,10 +1,12 @@
 import { Reveal } from '@/components/ui/Reveal';
+import { GlowAccent } from '@/components/ui/GlowAccent';
 import { PLATS_SEMAINE } from '@/lib/menu-data';
 
 export function PlatsSemaine() {
   return (
-    <section id="plats-semaine" className="border-y border-or/10 bg-noir px-6 py-24 md:px-12">
-      <div className="mx-auto max-w-6xl">
+    <section id="plats-semaine" className="relative border-y border-or/10 bg-noir px-6 py-24 md:px-12">
+      <GlowAccent />
+      <div className="relative mx-auto max-w-6xl">
         <Reveal className="mb-12 text-center">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-or/20 bg-or/[0.08] px-4 py-1.5 text-[0.72rem] tracking-wider text-or">
             ⚙ Mis à jour chaque semaine

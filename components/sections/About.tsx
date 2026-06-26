@@ -1,12 +1,13 @@
 import { Reveal } from '@/components/ui/Reveal';
+import { CountUp } from '@/components/ui/CountUp';
 import { GALERIE, AVIS } from '@/lib/menu-data';
 import { RESTAURANT } from '@/lib/restaurant';
 
 const STATS = [
-  { num: String(RESTAURANT.nbAvis), label: 'Avis Google' },
-  { num: RESTAURANT.note, label: 'Note moyenne' },
-  { num: '20-50', label: 'CHF / personne' },
-  { num: 'Mar-Dim', label: 'Fermé le lundi' },
+  { value: RESTAURANT.nbAvis, decimals: 0, label: 'Avis Google' },
+  { value: Number(RESTAURANT.note), decimals: 1, label: 'Note moyenne' },
+  { value: 0, fallback: '20-50', label: 'CHF / personne' },
+  { value: 0, fallback: 'Mar-Dim', label: 'Fermé le lundi' },
 ];
 
 export function About() {
@@ -33,9 +34,11 @@ export function About() {
             {STATS.map((s) => (
               <div
                 key={s.label}
-                className="border border-or/10 bg-sombre px-6 py-7 transition-colors hover:border-or/35"
+                className="border border-or/10 bg-sombre px-6 py-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-or/35"
               >
-                <div className="font-cormorant text-4xl font-medium leading-none text-or">{s.num}</div>
+                <div className="font-cormorant text-4xl font-medium leading-none text-or">
+                  <CountUp value={s.value} fallback={s.fallback} decimals={s.decimals} />
+                </div>
                 <div className="mt-1.5 text-[0.72rem] uppercase tracking-[0.18em] text-muted">{s.label}</div>
               </div>
             ))}

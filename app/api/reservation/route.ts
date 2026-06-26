@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
-// Clé Web3Forms côté serveur uniquement.
+// Clé d'accès Web3Forms — lue uniquement côté serveur via l'environnement.
+// À définir dans les variables d'environnement Vercel (et .env.local en local).
 const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY;
 
 export interface ReservationPayload {

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Reveal } from '@/components/ui/Reveal';
+import { GlowAccent } from '@/components/ui/GlowAccent';
 import { RESTAURANT } from '@/lib/restaurant';
 
 const HEURES = ['11h30', '12h00', '12h30', '13h00', '18h30', '19h00', '19h30', '20h00', '20h30', '21h00'];
@@ -64,8 +65,9 @@ export function Reservation() {
   }
 
   return (
-    <section id="reservation" className="border-t border-or/10 bg-sombre px-6 py-24 md:px-12">
-      <div className="mx-auto grid max-w-5xl items-start gap-16 md:grid-cols-2">
+    <section id="reservation" className="relative border-t border-or/10 bg-sombre px-6 py-24 md:px-12">
+      <GlowAccent />
+      <div className="relative mx-auto grid max-w-5xl items-start gap-16 md:grid-cols-2">
         <Reveal direction="right">
           <span className="section-tag">Réservation en ligne</span>
           <h2 className="section-title">

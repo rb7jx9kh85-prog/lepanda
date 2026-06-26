@@ -11,10 +11,12 @@ import { FacebookSection } from '@/components/sections/FacebookSection';
 import { Infos } from '@/components/sections/Infos';
 import { Footer } from '@/components/sections/Footer';
 import { Chatbot } from '@/components/ui/Chatbot';
+import { ScrollProgress } from '@/components/ui/ScrollProgress';
 
 export default function Home() {
   return (
     <>
+      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />
