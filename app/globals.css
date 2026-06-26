@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-noir text-texte font-sans font-light;
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-sombre;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-or;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .section-tag {
+    @apply mb-4 block text-[0.68rem] uppercase tracking-[0.35em] text-rouge;
+  }
+  .section-title {
+    @apply mb-6 font-cormorant text-[clamp(2.2rem,5vw,3.8rem)] font-medium leading-tight text-creme;
+  }
+  .section-title em {
+    @apply text-or not-italic;
+  }
+}
