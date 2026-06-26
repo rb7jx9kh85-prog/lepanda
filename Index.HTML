@@ -257,6 +257,50 @@ footer{padding:56px 48px 40px;background:var(--noir);border-top:1px solid rgba(2
   .footer-inner{grid-template-columns:1fr;}
   #chat-window{width:calc(100vw - 32px);right:16px;}
 }
+
+/* ═══ BADGE OUVERT / FERMÉ ═══ */
+.statut-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:20px;font-size:.78rem;font-weight:600;letter-spacing:.1em;margin-bottom:20px;}
+.statut-badge.ouvert{background:rgba(39,174,96,.15);color:#2ecc71;border:1px solid rgba(46,204,113,.3);}
+.statut-badge.ferme{background:rgba(192,57,43,.15);color:#e74c3c;border:1px solid rgba(231,76,60,.3);}
+.statut-dot{width:7px;height:7px;border-radius:50%;animation:blink 1.5s ease-in-out infinite;}
+.statut-badge.ouvert .statut-dot{background:#2ecc71;}
+.statut-badge.ferme .statut-dot{background:#e74c3c;animation:none;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* ═══ HORAIRES DEUX SERVICES ═══ */
+.horaires-jour-bloc{padding:10px 0;border-bottom:1px solid rgba(212,175,90,.06);}
+.horaires-jour-bloc:last-child{border-bottom:none;}
+.horaires-jour-nom{font-size:.82rem;color:var(--texte);margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;}
+.horaires-jour-nom.ferme-jour{color:var(--rouge);}
+.horaires-service-row{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.horaires-service-row::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--or);opacity:.5;flex-shrink:0;}
+.horaires-today-marker{font-size:.65rem;background:var(--or);color:var(--noir);padding:1px 6px;border-radius:8px;letter-spacing:.05em;}
+
+/* ═══ PLATS DE LA SEMAINE ═══ */
+.plats-section{background:var(--noir);border-top:1px solid rgba(212,175,90,.08);border-bottom:1px solid rgba(212,175,90,.08);}
+.plats-inner{max-width:1100px;margin:0 auto;}
+.plats-header{text-align:center;margin-bottom:48px;}
+.plats-badge-api{display:inline-flex;align-items:center;gap:8px;background:rgba(212,175,90,.08);border:1px solid rgba(212,175,90,.2);padding:6px 16px;border-radius:20px;font-size:.72rem;letter-spacing:.12em;color:var(--or);margin-bottom:20px;}
+.plats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.plat-card{background:var(--sombre);padding:32px 28px;border:1px solid rgba(212,175,90,.06);transition:border-color .3s,transform .3s;position:relative;}
+.plat-card:hover{border-color:rgba(212,175,90,.25);transform:translateY(-3px);}
+.plat-card-tag{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rouge);margin-bottom:10px;}
+.plat-card h4{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:var(--creme);margin-bottom:8px;}
+.plat-card p{font-size:.83rem;line-height:1.7;color:var(--muted);}
+.plat-card-prix{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--or);margin-top:14px;}
+.plat-card-nouveau{position:absolute;top:16px;right:16px;background:var(--rouge);color:#fff;font-size:.65rem;letter-spacing:.12em;padding:3px 10px;text-transform:uppercase;}
+.plats-note{text-align:center;margin-top:40px;font-size:.8rem;color:var(--muted);font-style:italic;opacity:.7;}
+
+/* ═══ FACEBOOK ═══ */
+.fb-section{background:linear-gradient(135deg,#1a1108 0%,#1877f2 200%);border-top:1px solid rgba(24,119,242,.2);}
+.fb-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.fb-left{display:flex;align-items:center;gap:24px;}
+.fb-icon{width:64px;height:64px;background:#1877f2;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;}
+.fb-text h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:500;color:var(--creme);margin-bottom:4px;}
+.fb-text p{font-size:.85rem;color:rgba(232,213,176,.6);letter-spacing:.05em;}
+.btn-facebook{padding:14px 36px;background:#1877f2;color:#fff;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;border-radius:4px;transition:background .3s,transform .2s;font-family:'Raleway',sans-serif;display:inline-block;white-space:nowrap;}
+.btn-facebook:hover{background:#1565d8;transform:translateY(-2px);}
+@media(max-width:768px){.plats-grid{grid-template-columns:1fr;}.fb-inner{flex-direction:column;text-align:center;}.fb-left{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -268,6 +312,7 @@ footer{padding:56px 48px 40px;background:var(--noir);border-top:1px solid rgba(2
     <li><a href="#galerie">Galerie</a></li>
     <li><a href="#menu">Specialites</a></li>
     <li><a href="#carte">La carte</a></li>
+    <li><a href="#plats-semaine">Plats du moment</a></li>
     <li><a href="#avis">Avis</a></li>
     <li><a href="#reservation" style="color:var(--or);">Reserver</a></li>
     <li><a href="#infos">Contact</a></li>
@@ -413,6 +458,61 @@ footer{padding:56px 48px 40px;background:var(--noir);border-top:1px solid rgba(2
   </div>
 </div>
 
+<div class="divider"><div class="divider-line"></div><div class="divider-icon">&#40857;</div><div class="divider-line"></div></div>
+
+<!-- ═══ PLATS DE LA SEMAINE ═══ -->
+<section id="plats-semaine" class="plats-section" style="padding:80px 48px;">
+  <div class="plats-inner">
+    <div class="plats-header reveal">
+      <div class="plats-badge-api">&#9881; Mis a jour chaque semaine</div>
+      <span class="section-tag">Selections du moment</span>
+      <h2 class="section-title">Plats de la <em>semaine</em></h2>
+      <p style="font-size:.9rem;color:var(--muted);max-width:500px;margin:0 auto;">Notre chef renouvelle la selection chaque semaine selon les produits frais du marche.</p>
+    </div>
+    <div class="plats-grid">
+      <div class="plat-card reveal">
+        <div class="plat-card-nouveau">Nouveau</div>
+        <div class="plat-card-tag">&#127859; Entree</div>
+        <h4>Raviolis vapeur au porc</h4>
+        <p>Dim sum maison, sauce soja-gingembre, ciboule fraiche</p>
+        <div class="plat-card-prix">16 CHF</div>
+      </div>
+      <div class="plat-card reveal">
+        <div class="plat-card-tag">&#127857; Plat du jour</div>
+        <h4>Crispy Beef du chef</h4>
+        <p>Boeuf croustillant, sauce aigre-douce maison, sesame grille, riz jasmin</p>
+        <div class="plat-card-prix">28 CHF</div>
+      </div>
+      <div class="plat-card reveal">
+        <div class="plat-card-tag">&#127856; Dessert</div>
+        <h4>Bananes flambees coco</h4>
+        <p>Caramel de lait de coco, glace vanille, noix de cajou</p>
+        <div class="plat-card-prix">10 CHF</div>
+      </div>
+      <div class="plat-card reveal">
+        <div class="plat-card-tag">&#127859; Entree</div>
+        <h4>Rouleaux de printemps (x4)</h4>
+        <p>Legumes croquants, vermicelles de riz, sauce nuoc-mam</p>
+        <div class="plat-card-prix">14 CHF</div>
+      </div>
+      <div class="plat-card reveal">
+        <div class="plat-card-nouveau">Coup de coeur</div>
+        <div class="plat-card-tag">&#127857; Plat</div>
+        <h4>Poulet saute aux noix de cajou</h4>
+        <p>Sauce hoisin, poivrons, champignons noirs, riz cantonais</p>
+        <div class="plat-card-prix">24 CHF</div>
+      </div>
+      <div class="plat-card reveal">
+        <div class="plat-card-tag">&#127857; Plat</div>
+        <h4>Crevettes sautees au wok</h4>
+        <p>Ail, gingembre, sauce XO, legumes de saison</p>
+        <div class="plat-card-prix">32 CHF</div>
+      </div>
+    </div>
+    <p class="plats-note reveal">&#9432; Ces plats sont presentatifs &mdash; la carte reelle est disponible au restaurant ou sur demande.</p>
+  </div>
+</section>
+
 <div class="divider"><div class="divider-line"></div><div class="divider-icon">&#10022;</div><div class="divider-line"></div></div>
 
 <section id="avis" style="padding-top:80px;padding-bottom:80px;">
@@ -523,15 +623,60 @@ footer{padding:56px 48px 40px;background:var(--noir);border-top:1px solid rgba(2
     </div>
     <div class="info-block reveal">
       <h3>Horaires</h3>
-      <div class="horaires-item"><span class="horaires-jour">Lundi</span><span class="horaires-heure" style="color:var(--rouge)">Ferme</span></div>
-      <div class="horaires-item"><span class="horaires-jour">Mardi - Vendredi</span><span class="horaires-heure">11h30 - 23h00</span></div>
-      <div class="horaires-item"><span class="horaires-jour">Samedi</span><span class="horaires-heure">11h30 - 23h00</span></div>
-      <div class="horaires-item"><span class="horaires-jour">Dimanche</span><span class="horaires-heure">11h30 - 23h00</span></div>
+      <div id="statut-badge" class="statut-badge ferme"><span class="statut-dot"></span><span id="statut-texte">Ferme actuellement</span></div>
+      <div class="horaires-jour-bloc" id="hor-lun">
+        <div class="horaires-jour-nom ferme-jour">Lundi <span id="mk-lun"></span></div>
+        <div class="horaires-service-row" style="color:var(--rouge);opacity:.7;">Ferme</div>
+      </div>
+      <div class="horaires-jour-bloc" id="hor-mar">
+        <div class="horaires-jour-nom">Mardi <span id="mk-mar"></span></div>
+        <div class="horaires-service-row">11h15 &ndash; 14h30</div>
+        <div class="horaires-service-row">18h30 &ndash; 23h00</div>
+      </div>
+      <div class="horaires-jour-bloc" id="hor-mer">
+        <div class="horaires-jour-nom">Mercredi <span id="mk-mer"></span></div>
+        <div class="horaires-service-row">11h15 &ndash; 14h30</div>
+        <div class="horaires-service-row">18h30 &ndash; 23h00</div>
+      </div>
+      <div class="horaires-jour-bloc" id="hor-jeu">
+        <div class="horaires-jour-nom">Jeudi <span id="mk-jeu"></span></div>
+        <div class="horaires-service-row">11h15 &ndash; 14h30</div>
+        <div class="horaires-service-row">18h30 &ndash; 23h00</div>
+      </div>
+      <div class="horaires-jour-bloc" id="hor-ven">
+        <div class="horaires-jour-nom">Vendredi <span id="mk-ven"></span></div>
+        <div class="horaires-service-row">11h30 &ndash; 14h30</div>
+        <div class="horaires-service-row">18h30 &ndash; 23h00</div>
+      </div>
+      <div class="horaires-jour-bloc" id="hor-sam">
+        <div class="horaires-jour-nom">Samedi <span id="mk-sam"></span></div>
+        <div class="horaires-service-row">11h30 &ndash; 14h30</div>
+        <div class="horaires-service-row">18h30 &ndash; 23h30</div>
+      </div>
+      <div class="horaires-jour-bloc" id="hor-dim">
+        <div class="horaires-jour-nom">Dimanche <span id="mk-dim"></span></div>
+        <div class="horaires-service-row">11h30 &ndash; 15h00</div>
+        <div class="horaires-service-row">18h30 &ndash; 23h00</div>
+      </div>
     </div>
     <div class="info-block reveal">
       <h3>Contact</h3>
       <ul><li><a href="tel:0772695971">077 269 59 71</a></li><li style="margin-top:8px;"><a href="mailto:lepanda@bluewin.ch">lepanda@bluewin.ch</a></li><li style="margin-top:12px;"><a href="https://maps.app.goo.gl/uHgmzGYbQ5pniqoJ8?g_st=ic" target="_blank">Nos avis Google</a></li><li style="margin-top:12px;"><a href="#reservation">Reserver en ligne</a></li></ul>
     </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION FACEBOOK ═══ -->
+<section class="fb-section" style="padding:60px 48px;">
+  <div class="fb-inner">
+    <div class="fb-left">
+      <div class="fb-icon">&#x1F426;</div>
+      <div class="fb-text">
+        <h2>Suivez-nous sur Facebook</h2>
+        <p>Photos, menus du jour, evenements &amp; actualites du Panda</p>
+      </div>
+    </div>
+    <a href="https://www.facebook.com/lepanda.leytron" target="_blank" rel="noopener" class="btn-facebook">&#x1F44D; Voir notre page</a>
   </div>
 </section>
 
@@ -543,7 +688,7 @@ footer{padding:56px 48px 40px;background:var(--noir);border-top:1px solid rgba(2
     </div>
     <div class="footer-col">
       <h4>Navigation</h4>
-      <ul><li><a href="#about">Notre histoire</a></li><li><a href="#galerie">Galerie</a></li><li><a href="#menu">Specialites</a></li><li><a href="#carte">La carte</a></li><li><a href="#reservation">Reserver</a></li><li><a href="#infos">Contact</a></li></ul>
+      <ul><li><a href="#about">Notre histoire</a></li><li><a href="#galerie">Galerie</a></li><li><a href="#menu">Specialites</a></li><li><a href="#carte">La carte</a></li><li><a href="#plats-semaine">Plats du moment</a></li><li><a href="#reservation">Reserver</a></li><li><a href="#infos">Contact</a></li><li><a href="https://www.facebook.com/lepanda.leytron" target="_blank">Facebook</a></li></ul>
     </div>
     <div class="footer-col">
       <h4>Informations</h4>
@@ -769,7 +914,53 @@ function sendMessage(){
   var txt=inp.value.trim(); if(!txt)return;
   inp.value=''; hideSugg(); doSend(txt);
 }
+/* ═══ OUVERT / FERMÉ EN TEMPS RÉEL (fuseau Europe/Zurich) ═══ */
+function checkStatutOuverture(){
+  var now=new Date();
+  var zurich=new Date(now.toLocaleString('en-US',{timeZone:'Europe/Zurich'}));
+  var day=zurich.getDay(); // 0=dim, 1=lun, 2=mar, 3=mer, 4=jeu, 5=ven, 6=sam
+  var h=zurich.getHours(), m=zurich.getMinutes();
+  var mins=h*60+m;
+  var horaires=[
+    null, // lundi (0 = index 1 car day=1)
+    {midi:[11*60+15,14*60+30],soir:[18*60+30,23*60+0]},  // mar
+    {midi:[11*60+15,14*60+30],soir:[18*60+30,23*60+0]},  // mer
+    {midi:[11*60+15,14*60+30],soir:[18*60+30,23*60+0]},  // jeu
+    {midi:[11*60+30,14*60+30],soir:[18*60+30,23*60+0]},  // ven
+    {midi:[11*60+30,14*60+30],soir:[18*60+30,23*60+30]}, // sam
+    {midi:[11*60+30,15*60+0], soir:[18*60+30,23*60+0]},  // dim
+  ];
+  var dayMap=['dim','lun','mar','mer','jeu','ven','sam'];
+  var idMap=[null,'hor-lun','hor-mar','hor-mer','hor-jeu','hor-ven','hor-sam','hor-dim'];
+  // surligneur du jour courant
+  var todayId=['hor-dim','hor-lun','hor-mar','hor-mer','hor-jeu','hor-ven','hor-sam'][day];
+  var mkIds=['mk-dim','mk-lun','mk-mar','mk-mer','mk-jeu','mk-ven','mk-sam'];
+  var mkId=['mk-dim','mk-lun','mk-mar','mk-mer','mk-jeu','mk-ven','mk-sam'][day];
+  var mk=document.getElementById(mkId);
+  if(mk) mk.innerHTML='<span class="horaires-today-marker">Aujourd\'hui</span>';
+  // badge ouvert/fermé
+  var badge=document.getElementById('statut-badge');
+  var texte=document.getElementById('statut-texte');
+  var ouvert=false;
+  if(day!==1){ // pas lundi
+    var h2=horaires[day===0?6:day-1];
+    if(h2 && ((mins>=h2.midi[0]&&mins<h2.midi[1])||(mins>=h2.soir[0]&&mins<h2.soir[1]))) ouvert=true;
+  }
+  if(badge && texte){
+    if(ouvert){
+      badge.className='statut-badge ouvert';
+      texte.textContent='Ouvert maintenant';
+    } else {
+      badge.className='statut-badge ferme';
+      texte.textContent=day===1?'Ferme le lundi':'Ferme actuellement';
+    }
+  }
+}
+checkStatutOuverture();
+setInterval(checkStatutOuverture,60000);
+
 document.addEventListener('DOMContentLoaded',function(){
+  checkStatutOuverture();
   var inp=document.getElementById('chat-input');
   if(inp) inp.addEventListener('keydown',function(e){if(e.key==='Enter')sendMessage();});
   initDateButtons();
