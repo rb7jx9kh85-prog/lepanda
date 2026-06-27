@@ -19,10 +19,10 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <PlatsSemaine />
         <Gallery />
         <Specialites />
         <Carte />
-        <PlatsSemaine />
         <Reviews />
         <Reservation />
         <FacebookSection />

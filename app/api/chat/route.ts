@@ -54,7 +54,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Requête invalide.' }, { status: 400 });
   }
 
-  // On borne l'historique pour limiter les coûts / abus.
+  // Limite stricte : max 16 messages, max 2000 caractères totaux pour éviter abus / surcharge tokens.
+  const MAX_MESSAGES = 16;
+  const MAX_TOTAL_CHARS = 2000;
+
+  if (history.length > MAX_MESSAGES) {
+    return NextResponse.json(
+      { error: 'Historique trop long. Veuillez rafraîchir le chat.' },
+      { status: 400 }
+    );
+  }
+
+  const totalChars = history.reduce((sum, m) => sum + (m.content?.length || 0), 0);
+  if (totalChars > MAX_TOTAL_CHARS) {
+    return NextResponse.json(
+      { error: 'Conversation trop longue. Veuillez rafraîchir le chat.' },
+      { status: 400 }
+    );
+  }
+
   const trimmed = history.slice(-12);
 
   try {

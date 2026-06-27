@@ -68,10 +68,12 @@ export function Chatbot() {
     setTyping(true);
 
     try {
+      const filtered = next.filter((m) => m.role !== 'assistant' || m.content).map(({ role, content }) => ({ role, content }));
+      const trimmedHistory = filtered.slice(-16);
       const resp = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: next.filter((m) => m.role !== 'assistant' || m.content).map(({ role, content }) => ({ role, content })) }),
+        body: JSON.stringify({ messages: trimmedHistory }),
       });
       const data = await resp.json();
       setTyping(false);
