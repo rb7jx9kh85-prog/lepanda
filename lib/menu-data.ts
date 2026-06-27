@@ -121,15 +121,15 @@ export interface Avis {
 }
 
 export const AVIS: Avis[] = [
-  { texte: ‘Restaurant très agréable avec un personnel souriant. La cuisine est excellente et les portions généreuses !’, auteur: ‘Client Google · Leytron’ },
-  { texte: ‘Personnel très accueillant ! Nourriture excellente. Nous avons pris à l’emporter, ils nous ont très bien servis.’, auteur: ‘Robin Ebener · Local Guide’ },
-  { texte: ‘Les plats sont excellents ! Une adresse que je recommande chaleureusement à tous les amateurs de cuisine asiatique.’, auteur: ‘Client Google · Leytron’ },
-  { texte: ‘Le Crispy Beef est à tomber ! On y retourne régulièrement, c’est notre restaurant préféré en Valais.’, auteur: ‘Sophie M. · Saxon’ },
-  { texte: ‘Accueil chaleureux, cadre intimiste et cuisine raffinée. Le menu déjeuner à 21.50 CHF est une belle surprise.’, auteur: ‘Marc D. · Martigny’ },
-  { texte: ‘Les dim sum maison sont une merveille. L’équipe prend vraiment soin de ses clients, on se sent comme à la maison.’, auteur: ‘Local Guide · Valais’ },
-  { texte: ‘Vraiment délicieux, les portions sont généreuses et les prix très corrects pour la qualité proposée.’, auteur: ‘Julie F. · Sion’ },
-  { texte: ‘Un coup de cœur ! Le cadre est très agréable et les plats de fruits de mer sont frais et savoureux.’, auteur: ‘Client Google · Conthey’ },
-  { texte: ‘Service impeccable et cuisine authentique. Le riz sauté aux fruits de mer est ma commande systématique.’, auteur: ‘Thomas B. · Leytron’ },
+  { texte: "Restaurant très agréable avec un personnel souriant. La cuisine est excellente et les portions généreuses !", auteur: "Client Google · Leytron" },
+  { texte: "Personnel très accueillant ! Nourriture excellente. Nous avons pris à l’emporter, ils nous ont très bien servis.", auteur: "Robin Ebener · Local Guide" },
+  { texte: "Les plats sont excellents ! Une adresse que je recommande chaleureusement à tous les amateurs de cuisine asiatique.", auteur: "Client Google · Leytron" },
+  { texte: "Le Crispy Beef est à tomber ! On y retourne régulièrement, c’est notre restaurant préféré en Valais.", auteur: "Sophie M. · Saxon" },
+  { texte: "Accueil chaleureux, cadre intimiste et cuisine raffinée. Le menu déjeuner à 21.50 CHF est une belle surprise.", auteur: "Marc D. · Martigny" },
+  { texte: "Les dim sum maison sont une merveille. L’équipe prend vraiment soin de ses clients, on se sent comme à la maison.", auteur: "Local Guide · Valais" },
+  { texte: "Vraiment délicieux, les portions sont généreuses et les prix très corrects pour la qualité proposée.", auteur: "Julie F. · Sion" },
+  { texte: "Un coup de cœur ! Le cadre est très agréable et les plats de fruits de mer sont frais et savoureux.", auteur: "Client Google · Conthey" },
+  { texte: "Service impeccable et cuisine authentique. Le riz sauté aux fruits de mer est ma commande systématique.", auteur: "Thomas B. · Leytron" },
 ];
 
 export const GALERIE: { src: string; alt: string }[] = [
