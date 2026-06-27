@@ -8,7 +8,7 @@ export function Specialites() {
   return (
     <section id="menu" className="border-y border-or/10 bg-sombre">
       {/* Bandeau titre avec révélation à l'encre sur l'image du homard */}
-      <div className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
+      <div className="relative mx-4 mt-6 h-[60vh] min-h-[420px] overflow-hidden rounded-3xl md:mx-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/ChatGPT Image 26 juin 2026, 18_16_04.png"
@@ -36,7 +36,7 @@ export function Specialites() {
         <div className="grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-3">
           {SPECIALITES.map((s, i) => (
             <Reveal key={s.titre} delay={(i % 3) * 0.08}>
-              <div className="h-full border border-or/[0.06] bg-noir px-8 py-10 transition-all duration-300 hover:-translate-y-1 hover:border-or/25">
+              <div className="h-full rounded-2xl border border-or/[0.06] bg-noir px-8 py-10 transition-all duration-300 hover:-translate-y-1 hover:border-or/25 hover:shadow-[0_18px_50px_rgba(0,0,0,0.4)]">
                 <div className="mb-5 text-3xl">{s.icone}</div>
                 <h3 className="mb-3 font-cormorant text-2xl font-medium text-creme">{s.titre}</h3>
                 <p className="text-sm leading-relaxed text-muted">{s.description}</p>

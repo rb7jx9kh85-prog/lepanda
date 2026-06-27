@@ -7,10 +7,10 @@ const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY;
 export interface ReservationPayload {
   name: string;
   telephone: string;
-  email?: string;
-  date: string;
-  heure: string;
   personnes: string;
+  email?: string;
+  date?: string;
+  heure?: string;
   message?: string;
   source?: string;
 }
@@ -30,9 +30,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, error: 'Requête invalide.' }, { status: 400 });
   }
 
-  if (!data.name || !data.telephone || !data.date || !data.heure || !data.personnes) {
+  // Seuls le nom, le nombre de personnes et le téléphone sont obligatoires.
+  if (!data.name || !data.telephone || !data.personnes) {
     return NextResponse.json(
-      { success: false, error: 'Champs obligatoires manquants.' },
+      { success: false, error: 'Nom, nombre de personnes et téléphone sont obligatoires.' },
       { status: 400 }
     );
   }
@@ -47,8 +48,8 @@ export async function POST(request: Request) {
         name: data.name,
         telephone: data.telephone,
         email: data.email || 'non fourni',
-        date: data.date,
-        heure: data.heure,
+        date: data.date || 'à définir (rappeler le client)',
+        heure: data.heure || 'à définir (rappeler le client)',
         personnes: data.personnes,
         message: data.message || 'aucun message',
       }),

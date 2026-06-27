@@ -34,7 +34,7 @@ export function About() {
             {STATS.map((s) => (
               <div
                 key={s.label}
-                className="border border-or/10 bg-sombre px-6 py-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-or/35"
+                className="rounded-xl border border-or/10 bg-sombre px-6 py-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-or/35"
               >
                 <div className="font-cormorant text-4xl font-medium leading-none text-or">
                   <CountUp value={s.value} fallback={s.fallback} decimals={s.decimals} />
@@ -48,13 +48,13 @@ export function About() {
         <Reveal direction="left" delay={0.1}>
           <div className="grid grid-cols-2 grid-rows-2 gap-1" style={{ gridTemplateRows: '220px 220px' }}>
             {/* eslint-disable @next/next/no-img-element */}
-            <div className="row-span-2 overflow-hidden">
+            <div className="row-span-2 overflow-hidden rounded-2xl">
               <img src={GALERIE[0].src} alt={GALERIE[0].alt} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
             </div>
-            <div className="overflow-hidden">
+            <div className="overflow-hidden rounded-2xl">
               <img src={GALERIE[1].src} alt={GALERIE[1].alt} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
             </div>
-            <div className="overflow-hidden">
+            <div className="overflow-hidden rounded-2xl">
               <img src={GALERIE[2].src} alt={GALERIE[2].alt} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
             </div>
             {/* eslint-enable @next/next/no-img-element */}

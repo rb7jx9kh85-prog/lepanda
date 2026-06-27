@@ -13,13 +13,13 @@ interface Msg {
 const SUGGESTIONS = [
   'Quels sont vos horaires ?',
   'Je voudrais réserver une table',
-  'Quelles sont vos spécialités ?',
+  'Quels sont les plats de la semaine ?',
 ];
 
 export function Chatbot() {
   const [open, setOpen] = useState(false);
   const [history, setHistory] = useState<Msg[]>([
-    { role: 'assistant', content: 'Bonjour 🐼 Je suis Mei, l’assistante du Panda. Comment puis-je vous aider ?' },
+    { role: 'assistant', content: 'Bonjour et bienvenue 🐼 Ici Le Panda. Une question sur la carte, les horaires, ou envie de réserver une table ?' },
   ]);
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
@@ -40,11 +40,12 @@ export function Chatbot() {
       });
       const result = await res.json();
       if (result.success) {
+        const creneau = data.date && data.heure ? ` pour le ${data.date} à ${data.heure}` : '';
         setHistory((h) => [
           ...h,
           {
             role: 'assistant',
-            content: `✅ Réservation confirmée ! Nous vous attendons le ${data.date} à ${data.heure} pour ${data.personnes} personne(s). À bientôt 🐼`,
+            content: `✅ C'est noté, ${data.name} ! Votre demande de réservation pour ${data.personnes} personne(s)${creneau} est enregistrée. Nous vous rappelons très vite au ${data.telephone} pour confirmer. À bientôt 🐼`,
           },
         ]);
       } else {
@@ -133,8 +134,8 @@ export function Chatbot() {
             <div className="flex items-center gap-3 border-b border-or/15 bg-noir/80 px-5 py-4">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-rouge text-lg">🐼</div>
               <div>
-                <p className="font-cormorant text-lg leading-none text-creme">Mei</p>
-                <p className="text-[0.7rem] text-muted">Assistante · Le Panda</p>
+                <p className="font-cormorant text-lg leading-none text-creme">Le Panda</p>
+                <p className="text-[0.7rem] text-muted">Restaurant Asiatique · Leytron</p>
               </div>
             </div>
 

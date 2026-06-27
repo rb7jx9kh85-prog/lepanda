@@ -59,7 +59,7 @@ export function Carte() {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.04 }}
-                className="group/item relative flex items-baseline justify-between gap-4 overflow-hidden border border-or/[0.05] bg-sombre px-7 py-6 transition-colors hover:border-or/25"
+                className="group/item relative flex items-baseline justify-between gap-4 overflow-hidden rounded-xl border border-or/[0.05] bg-sombre px-7 py-6 transition-colors hover:border-or/25"
               >
                 {/* Liseré doré qui apparaît à gauche au survol */}
                 <span className="absolute inset-y-0 left-0 w-[2px] origin-top scale-y-0 bg-gradient-to-b from-or to-rouge transition-transform duration-300 group-hover/item:scale-y-100" />

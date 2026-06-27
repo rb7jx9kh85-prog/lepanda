@@ -23,7 +23,7 @@ export function Infos() {
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-px md:grid-cols-[1.3fr_1fr_1fr]">
         {/* Nous trouver */}
         <Reveal>
-          <div className="h-full border border-or/[0.06] bg-noir px-9 py-12">
+          <div className="h-full rounded-2xl border border-or/[0.06] bg-noir px-9 py-12">
             <h3 className="mb-5 text-[0.7rem] uppercase tracking-[0.25em] text-or">Nous trouver</h3>
             <ul className="space-y-1 text-[0.92rem] leading-loose text-muted">
               <li>{RESTAURANT.adresse}</li>
@@ -41,7 +41,7 @@ export function Infos() {
 
         {/* Horaires */}
         <Reveal delay={0.08}>
-          <div className="h-full border border-or/[0.06] bg-noir px-9 py-12">
+          <div className="h-full rounded-2xl border border-or/[0.06] bg-noir px-9 py-12">
             <h3 className="mb-5 text-[0.7rem] uppercase tracking-[0.25em] text-or">Horaires</h3>
 
             {statut && (
@@ -81,7 +81,7 @@ export function Infos() {
 
         {/* Contact */}
         <Reveal delay={0.16}>
-          <div className="h-full border border-or/[0.06] bg-noir px-9 py-12">
+          <div className="h-full rounded-2xl border border-or/[0.06] bg-noir px-9 py-12">
             <h3 className="mb-5 text-[0.7rem] uppercase tracking-[0.25em] text-or">Contact</h3>
             <ul className="space-y-3 text-[0.92rem] leading-loose text-muted">
               <li><a href={`tel:${RESTAURANT.telephoneRaw}`} className="text-texte transition-colors hover:text-or">{RESTAURANT.telephone}</a></li>
