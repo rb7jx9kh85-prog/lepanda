@@ -12,10 +12,13 @@ import { RESTAURANT } from '@/lib/restaurant';
 export function Hero() {
   return (
     <section id="accueil" className="relative">
+      {/* Images locales — remplace ces 2 fichiers dans public/images/ :
+          - exterieur.jpg : facade du restaurant (affichee en premier)
+          - homard.jpg    : plateau de homard (se deploie au scroll) */}
       <ScrollExpandMedia
         mediaType="image"
-        bgImageSrc="https://media-cdn.tripadvisor.com/media/photo-o/0e/18/a1/a3/plateau-de-fruits-du.jpg"
-        mediaSrc="https://foto1.sluurpy.com/locali/ch/6983402/16275372.jpg"
+        bgImageSrc="/images/exterieur.jpg"
+        mediaSrc="/images/homard.jpg"
         title="Le Panda"
         date="Leytron · Valais"
         scrollToExpand="Faites défiler pour découvrir"
