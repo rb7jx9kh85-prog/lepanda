@@ -12,13 +12,13 @@ import { RESTAURANT } from '@/lib/restaurant';
 export function Hero() {
   return (
     <section id="accueil" className="relative">
-      {/* Images locales — remplace ces 2 fichiers dans public/images/ :
-          - exterieur.jpg : facade du restaurant (affichee en premier)
-          - homard.jpg    : plateau de homard (se deploie au scroll) */}
+      {/* Images locales dans public/images/ :
+          - facade (affichee en premier) : "ChatGPT Image 26 juin 2026, 18_07_41.png"
+          - homard (se deploie au scroll): "ChatGPT Image 26 juin 2026, 18_16_04.png" */}
       <ScrollExpandMedia
         mediaType="image"
-        bgImageSrc="/images/exterieur.jpg"
-        mediaSrc="/images/homard.jpg"
+        bgImageSrc="/images/ChatGPT Image 26 juin 2026, 18_07_41.png"
+        mediaSrc="/images/ChatGPT Image 26 juin 2026, 18_16_04.png"
         title="Le Panda"
         date="Leytron · Valais"
         scrollToExpand="Faites défiler pour découvrir"

@@ -11,7 +11,7 @@ export function Specialites() {
       <div className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/homard.jpg"
+          src="/images/ChatGPT Image 26 juin 2026, 18_16_04.png"
           alt="Plateau de homard du Panda"
           className="absolute inset-0 h-full w-full object-cover"
         />
