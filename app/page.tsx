@@ -8,7 +8,6 @@ import { PlatsSemaine } from '@/components/sections/PlatsSemaine';
 import { Reviews } from '@/components/sections/Reviews';
 import { Reservation } from '@/components/sections/Reservation';
 import { FacebookSection } from '@/components/sections/FacebookSection';
-import { Infos } from '@/components/sections/Infos';
 import { Footer } from '@/components/sections/Footer';
 import { Chatbot } from '@/components/ui/Chatbot';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
@@ -28,7 +27,6 @@ export default function Home() {
         <Reviews />
         <Reservation />
         <FacebookSection />
-        <Infos />
       </main>
       <Footer />
       <Chatbot />

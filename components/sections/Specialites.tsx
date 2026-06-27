@@ -33,7 +33,7 @@ export function Specialites() {
 
       {/* Grille des spécialités */}
       <div className="mx-auto max-w-6xl px-6 py-20 md:px-12">
-        <div className="grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SPECIALITES.map((s, i) => (
             <Reveal key={s.titre} delay={(i % 3) * 0.08}>
               <div className="h-full rounded-2xl border border-or/[0.06] bg-noir px-8 py-10 transition-all duration-300 hover:-translate-y-1 hover:border-or/25 hover:shadow-[0_18px_50px_rgba(0,0,0,0.4)]">
