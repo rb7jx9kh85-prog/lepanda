@@ -30,7 +30,7 @@ export function About() {
             l’excellence culinaire se marie à un service attentionné. Portions
             généreuses, prix accessibles.
           </p>
-          <div className="grid grid-cols-2 gap-px">
+          <div className="grid grid-cols-2 gap-3">
             {STATS.map((s) => (
               <div
                 key={s.label}
@@ -46,7 +46,7 @@ export function About() {
         </Reveal>
 
         <Reveal direction="left" delay={0.1}>
-          <div className="grid grid-cols-2 grid-rows-2 gap-1" style={{ gridTemplateRows: '220px 220px' }}>
+          <div className="grid grid-cols-2 grid-rows-2 gap-3" style={{ gridTemplateRows: '220px 220px' }}>
             {/* eslint-disable @next/next/no-img-element */}
             <div className="row-span-2 overflow-hidden rounded-2xl">
               <img src={GALERIE[0].src} alt={GALERIE[0].alt} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
