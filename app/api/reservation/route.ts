@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const TO_EMAIL = process.env.RESERVATION_EMAIL ?? 'noevouillamoz3@gmail.com';
+const TO_EMAIL = process.env.RESERVATION_EMAIL || 'lepanda@bluewin.ch';
 
 export interface ReservationPayload {
   name: string;
