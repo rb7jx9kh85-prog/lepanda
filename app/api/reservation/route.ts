@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const TO_EMAIL = process.env.RESERVATION_EMAIL ?? 'lepanda@bluewin.ch';
+const TO_EMAIL = process.env.RESERVATION_EMAIL ?? 'noevouillamoz3@gmail.com';
 
 export interface ReservationPayload {
   name: string;
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
 
   try {
     const { error } = await resend.emails.send({
-      from: 'Réservations Le Panda <reservations@lepanda-leytron.ch>',
+      from: 'Réservations Le Panda <onboarding@resend.dev>',
       to: TO_EMAIL,
       replyTo: data.email || undefined,
       subject: `Nouvelle réservation – ${data.name} · ${data.date || 'date à définir'} ${data.heure || ''} · ${data.personnes} pers.`,
