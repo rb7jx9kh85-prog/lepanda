@@ -95,9 +95,12 @@ export default function MentionsLegales() {
               Ne partagez pas d&apos;informations sensibles via le chatbot.
             </li>
             <li>
-              <strong className="text-texte">Resend</strong> — Les emails de réservation transitent par Resend.
-              Politique de confidentialité :{' '}
-              <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-or hover:underline">resend.com/legal/privacy-policy</a>
+              <strong className="text-texte">Web3Forms</strong> — Les demandes de réservation envoyées via
+              le formulaire sont transmises par e-mail au restaurant via le service Web3Forms.
+              Les données saisies (nom, téléphone, e-mail, date, nombre de personnes, message) sont uniquement
+              utilisées pour traiter votre demande de réservation et ne sont pas conservées par Web3Forms
+              au-delà de l&apos;acheminement du message. Politique de confidentialité :{' '}
+              <a href="https://web3forms.com/privacy" target="_blank" rel="noopener noreferrer" className="text-or hover:underline">web3forms.com/privacy</a>
             </li>
             <li>
               <strong className="text-texte">Google Fonts</strong> — Les polices de caractères sont chargées

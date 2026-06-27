@@ -46,17 +46,40 @@ export function Reservation() {
 
   async function submit() {
     if (!name || !tel) return setError('Nom et téléphone obligatoires.');
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+    if (!accessKey) {
+      return setError(`Formulaire indisponible. Appelez le ${RESTAURANT.telephone}.`);
+    }
+
     setSending(true);
     setError('');
     try {
-      const res = await fetch('/api/reservation', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, telephone: tel, email, date, heure, personnes, message, source: 'site' }),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: `Nouvelle réservation – ${name} · ${date || 'date à définir'} ${heure} · ${personnes} pers.`,
+          from_name: 'Réservations Le Panda',
+          // Champs lisibles dans l'email Web3Forms
+          Nom: name,
+          Téléphone: tel,
+          Email: email || '—',
+          Date: date || 'À définir (rappeler le client)',
+          Heure: heure || 'À définir',
+          Personnes: personnes,
+          Message: message || '—',
+          replyto: email || undefined,
+          botcheck: '',
+        }),
       });
       const data = await res.json();
-      if (data.success) setDone(true);
-      else setError(`Erreur d’envoi. Appelez le ${RESTAURANT.telephone}.`);
+      if (res.ok && data.success) {
+        setDone(true);
+      } else {
+        setError(`Erreur d’envoi. Appelez le ${RESTAURANT.telephone}.`);
+      }
     } catch {
       setError(`Erreur réseau. Appelez le ${RESTAURANT.telephone}.`);
     } finally {
