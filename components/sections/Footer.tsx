@@ -76,9 +76,14 @@ export function Footer() {
 
         {/* Barre du bas */}
         <div className="mt-14 flex flex-col items-start justify-between gap-5 border-t border-white/[0.05] pt-8 md:flex-row md:items-center">
-          <span className="text-[0.82rem] text-[#6E604E]">
-            © {new Date().getFullYear()} Le Panda · Tous droits réservés
-          </span>
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="text-[0.82rem] text-[#6E604E]">
+              © {new Date().getFullYear()} Le Panda · Tous droits réservés
+            </span>
+            <a href="/mentions-legales" className="text-[0.78rem] text-[#6E604E] underline underline-offset-2 transition-colors hover:text-[#B99053]">
+              Mentions légales & Cookies
+            </a>
+          </div>
           <div className="flex gap-8">
             <SocialLink href={RESTAURANT.facebook} external>Facebook</SocialLink>
             <SocialLink href={RESTAURANT.googleMaps} external>Google Maps</SocialLink>

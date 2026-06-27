@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Noto_Serif_SC, Cormorant_Garamond, Raleway } from 'next/font/google';
 import { RESTAURANT } from '@/lib/restaurant';
+import { CookieBanner } from '@/components/ui/CookieBanner';
 import './globals.css';
 
 const notoSerifSC = Noto_Serif_SC({
@@ -78,7 +79,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }
