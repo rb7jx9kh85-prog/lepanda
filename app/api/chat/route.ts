@@ -1,9 +1,64 @@
 import { NextResponse } from 'next/server';
 import { RESTAURANT, HORAIRES, formatService } from '@/lib/restaurant';
 import { SPECIALITES, CARTE, PLATS_SEMAINE } from '@/lib/menu-data';
+import { MENU_REST_URL } from '@/lib/firebase';
 
 // La clé n'est JAMAIS exposée au navigateur : elle vit uniquement ici, côté serveur.
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+/* ─── Lecture du menu live publié par le panneau d'admin (Firestore REST) ─── */
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function decodeFirestore(value: any): any {
+  if (!value || typeof value !== 'object') return value;
+  if ('stringValue' in value) return value.stringValue;
+  if ('integerValue' in value) return Number(value.integerValue);
+  if ('doubleValue' in value) return value.doubleValue;
+  if ('booleanValue' in value) return value.booleanValue;
+  if ('nullValue' in value) return null;
+  if ('timestampValue' in value) return value.timestampValue;
+  if ('mapValue' in value) return decodeFields(value.mapValue?.fields ?? {});
+  if ('arrayValue' in value) return (value.arrayValue?.values ?? []).map(decodeFirestore);
+  return undefined;
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function decodeFields(fields: Record<string, any>): Record<string, any> {
+  const out: Record<string, any> = {};
+  for (const k of Object.keys(fields)) out[k] = decodeFirestore(fields[k]);
+  return out;
+}
+
+/** Renvoie le bloc texte du menu de la semaine, depuis Firestore si publié,
+ *  sinon depuis les données locales (PLATS_SEMAINE). */
+async function fetchMenuSemaine(): Promise<string> {
+  try {
+    const resp = await fetch(MENU_REST_URL, { next: { revalidate: 60 } });
+    if (resp.ok) {
+      const json = await resp.json();
+      if (json?.fields) {
+        const data = decodeFields(json.fields);
+        const plats: any[] = Array.isArray(data.plats) ? data.plats : [];
+        if (plats.length > 0) {
+          const lignes = plats
+            .map((p) => `  - ${p.emoji ?? ''} ${p.jour ?? ''} (${p.type ?? ''}) : ${p.nom} — ${p.description}`)
+            .join('\n');
+          const entete = [
+            data.semaine ? `Semaine du ${data.semaine}.` : '',
+            data.description_menu ? `Formule : ${data.description_menu}.` : '',
+            data.prix_menu ? `Menu à ${data.prix_menu} CHF.` : '',
+          ]
+            .filter(Boolean)
+            .join(' ');
+          return `${entete}\n${lignes}`;
+        }
+      }
+    }
+  } catch {
+    /* repli ci-dessous */
+  }
+  // Repli : données locales
+  return PLATS_SEMAINE.map((p) => `  - ${p.tag} ${p.nom} (${p.prix}) : ${p.description}`).join('\n');
+}
 
 /**
  * Construit le « system prompt » à partir des données centralisées
@@ -11,7 +66,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
  * horaires, de la carte ou des plats de la semaine se répercute
  * automatiquement sur le chatbot — aucune duplication à maintenir.
  */
-function buildSystemPrompt(): string {
+function buildSystemPrompt(platsSemaine: string): string {
   const horaires = HORAIRES.map((j) => `  - ${j.nom} : ${formatService(j).join(' / ')}`).join('\n');
 
   const specialites = SPECIALITES.map((s) => `  - ${s.titre} (${s.prix}) : ${s.description}`).join('\n');
@@ -22,8 +77,6 @@ function buildSystemPrompt(): string {
       .join('\n');
     return `  ${cat.label} :\n${plats}`;
   }).join('\n');
-
-  const platsSemaine = PLATS_SEMAINE.map((p) => `  - ${p.tag} ${p.nom} (${p.prix}) : ${p.description}`).join('\n');
 
   return `Tu es « Le Panda », l'hôte virtuel et chaleureux du restaurant Le Panda à ${RESTAURANT.ville} (${RESTAURANT.region}, Suisse).
 Tu parles à la première personne au nom du restaurant. Réponds TOUJOURS en français, de façon chaleureuse, naturelle et concise (1-2 emojis max, 🐼 bienvenu).
@@ -99,7 +152,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         max_tokens: 450,
-        messages: [{ role: 'system', content: buildSystemPrompt() }, ...trimmed],
+        messages: [{ role: 'system', content: buildSystemPrompt(await fetchMenuSemaine()) }, ...trimmed],
       }),
     });
 
