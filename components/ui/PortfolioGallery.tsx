@@ -1,10 +1,10 @@
 'use client';
 
 import { ArrowRight } from 'lucide-react';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { GlassButton } from '@/components/ui/GlassButton';
 
 interface PortfolioGalleryProps {
   title?: string;
@@ -51,14 +51,12 @@ export function PortfolioGallery({
             {title}
           </h2>
 
-          <Link
-            href={archiveButton.href}
-            target={archiveButton.href.startsWith('http') ? '_blank' : undefined}
-            className="inline-flex items-center gap-3 bg-or text-noir px-6 py-3 rounded-full font-medium hover:bg-or-clair transition-colors group mb-20"
-          >
-            <span>{archiveButton.text}</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <div className="mb-20">
+            <GlassButton href={archiveButton.href} external={archiveButton.href.startsWith('http')} variant="gold">
+              {archiveButton.text}
+              <ArrowRight className="h-5 w-5" />
+            </GlassButton>
+          </div>
         </div>
 
         {/* Desktop 3D overlapping layout */}

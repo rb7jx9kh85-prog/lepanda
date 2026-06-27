@@ -9,15 +9,16 @@ interface GlassButtonProps {
   href?: string;
   onClick?: () => void;
   external?: boolean;
-  /** 'light' = texte noir sur verre clair (par défaut) · 'gold' = accent doré */
+  /** Conservé pour compat — 'gold' ajoute une légère teinte dorée. */
   variant?: 'light' | 'gold';
   className?: string;
   type?: 'button' | 'submit';
 }
 
 /**
- * Bouton glassmorphism réutilisable : verre dépoli translucide,
- * reflet de lumière au survol, léger soulèvement.
+ * Bouton « liquid glass » : verre dépoli translucide, reflet qui balaye,
+ * halo lumineux au survol, léger soulèvement + scale.
+ * Style unifié sur tout le site.
  */
 export function GlassButton({
   children,
@@ -29,34 +30,38 @@ export function GlassButton({
   type = 'button',
 }: GlassButtonProps) {
   const base = cn(
-    'group relative inline-flex items-center justify-center overflow-hidden',
-    'px-9 py-4 rounded-full font-semibold tracking-wide text-[15px]',
-    'border backdrop-blur-[14px] transition-all duration-300',
-    '-translate-y-0 hover:-translate-y-[3px] active:translate-y-0',
+    'group/liquid relative inline-flex items-center justify-center overflow-hidden',
+    'rounded-full px-10 py-4 text-[17px] font-semibold tracking-[0.4px] text-white',
+    'border backdrop-blur-[18px] transition-all duration-[450ms] [transition-timing-function:cubic-bezier(.2,.8,.2,1)]',
+    'hover:-translate-y-1 hover:scale-[1.04] active:scale-[0.98]',
     variant === 'gold'
-      ? 'bg-or/20 border-or/40 text-or-clair hover:bg-or/30 hover:border-or/70'
-      : 'bg-white/[0.18] border-white/30 text-creme hover:bg-white/[0.28] hover:border-white/50',
-    'shadow-[0_10px_30px_rgba(0,0,0,0.25),inset_0_1px_1px_rgba(255,255,255,0.25)]',
-    'hover:shadow-[0_18px_40px_rgba(0,0,0,0.35),inset_0_1px_2px_rgba(255,255,255,0.4)]',
+      ? 'border-or/30 bg-or/[0.10] hover:border-or/50 hover:bg-or/[0.16]'
+      : 'border-white/[0.18] bg-white/[0.08] hover:border-white/30 hover:bg-white/[0.12]',
+    'shadow-[inset_0_1px_1px_rgba(255,255,255,0.18),0_12px_35px_rgba(0,0,0,0.25)]',
+    'hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_18px_45px_rgba(0,0,0,0.35)]',
     className
   );
 
-  const shine = (
-    <span
-      aria-hidden
-      className={cn(
-        'pointer-events-none absolute top-0 left-[-120%] h-full w-[55%]',
-        'bg-gradient-to-r from-transparent via-white/70 to-transparent',
-        'skew-x-[-25deg] transition-[left] duration-700 ease-out',
-        'group-hover:left-[170%]'
-      )}
-    />
-  );
-
-  const content = (
+  const decorations = (
     <>
-      {shine}
-      <span className="relative z-10">{children}</span>
+      {/* Reflet qui balaye */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute left-[-140%] top-[-60%] h-[220%] w-[180%] rotate-[12deg] transition-[left] duration-[1000ms] group-hover/liquid:left-[120%]"
+        style={{
+          background:
+            'linear-gradient(110deg, transparent 20%, rgba(255,255,255,.35) 50%, transparent 80%)',
+        }}
+      />
+      {/* Halo */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-[400ms] group-hover/liquid:opacity-100"
+        style={{
+          background: 'radial-gradient(circle at top, rgba(255,255,255,.18), transparent 70%)',
+        }}
+      />
+      <span className="relative z-10 inline-flex items-center gap-2">{children}</span>
     </>
   );
 
@@ -68,14 +73,14 @@ export function GlassButton({
         target={external ? '_blank' : undefined}
         rel={external ? 'noopener noreferrer' : undefined}
       >
-        {content}
+        {decorations}
       </Link>
     );
   }
 
   return (
     <button type={type} onClick={onClick} className={base}>
-      {content}
+      {decorations}
     </button>
   );
 }
