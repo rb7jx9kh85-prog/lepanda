@@ -31,7 +31,7 @@ export function Chatbot() {
   }, [history, typing]);
 
   async function sendReservation(data: Record<string, string>) {
-    setHistory((h) => [...h, { role: ‘assistant’, content: ‘Parfait, j’envoie votre réservation… 📅’ }]);
+    setHistory((h) => [...h, { role: ‘assistant’, content: `Parfait, j’envoie votre réservation… 📅` }]);
     const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
     if (!accessKey) {
       setHistory((h) => [...h, { role: ‘assistant’, content: `Formulaire indisponible. Appelez-nous au ${RESTAURANT.telephone}.` }]);
