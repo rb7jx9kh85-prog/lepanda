@@ -31,38 +31,38 @@ export function Chatbot() {
   }, [history, typing]);
 
   async function sendReservation(data: Record<string, string>) {
-    setHistory((h) => [...h, { role: ‘assistant’, content: `Parfait, j’envoie votre réservation… 📅` }]);
+    setHistory((h) => [...h, { role: 'assistant', content: `Parfait, j'envoie votre réservation… 📅` }]);
     const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
     if (!accessKey) {
-      setHistory((h) => [...h, { role: ‘assistant’, content: `Formulaire indisponible. Appelez-nous au ${RESTAURANT.telephone}.` }]);
+      setHistory((h) => [...h, { role: 'assistant', content: `Formulaire indisponible. Appelez-nous au ${RESTAURANT.telephone}.` }]);
       return;
     }
     try {
-      const res = await fetch(‘https://api.web3forms.com/submit’, {
-        method: ‘POST’,
-        headers: { ‘Content-Type’: ‘application/json’, Accept: ‘application/json’ },
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           access_key: accessKey,
-          subject: `Nouvelle réservation (chatbot) – ${data.name} · ${data.date || ‘date à définir’} ${data.heure || ‘’} · ${data.personnes} pers.`,
-          from_name: ‘Réservations Le Panda’,
+          subject: `Nouvelle réservation (chatbot) – ${data.name} · ${data.date || 'date à définir'} ${data.heure || ''} · ${data.personnes} pers.`,
+          from_name: 'Réservations Le Panda',
           Nom: data.name,
           Téléphone: data.telephone,
           Personnes: data.personnes,
-          Date: data.date || ‘À définir’,
-          Heure: data.heure || ‘À définir’,
-          Message: data.message || ‘—‘,
-          Source: ‘chatbot’,
-          botcheck: ‘’,
+          Date: data.date || 'À définir',
+          Heure: data.heure || 'À définir',
+          Message: data.message || '—',
+          Source: 'chatbot',
+          botcheck: '',
         }),
       });
       const result = await res.json();
       if (res.ok && result.success) {
-        const creneau = data.date && data.heure ? ` pour le ${data.date} à ${data.heure}` : ‘’;
+        const creneau = data.date && data.heure ? ` pour le ${data.date} à ${data.heure}` : '';
         setHistory((h) => [
           ...h,
           {
-            role: ‘assistant’,
-            content: `✅ C’est noté, ${data.name} ! Votre demande de réservation pour ${data.personnes} personne(s)${creneau} est enregistrée. Nous vous rappelons très vite au ${data.telephone} pour confirmer. À bientôt 🐼`,
+            role: 'assistant',
+            content: `✅ C'est noté, ${data.name} ! Votre demande de réservation pour ${data.personnes} personne(s)${creneau} est enregistrée. Nous vous rappelons très vite au ${data.telephone} pour confirmer. À bientôt 🐼`,
           },
         ]);
       } else {
@@ -71,7 +71,7 @@ export function Chatbot() {
     } catch {
       setHistory((h) => [
         ...h,
-        { role: ‘assistant’, content: `Erreur d’envoi. Appelez-nous au ${RESTAURANT.telephone}.` },
+        { role: 'assistant', content: `Erreur d'envoi. Appelez-nous au ${RESTAURANT.telephone}.` },
       ]);
     }
   }
