@@ -198,6 +198,47 @@ export default function InkReveal({
     return () => window.removeEventListener('resize', resize);
   }, [resize]);
 
+  // Auto-sweep on touch devices: simulate a serpentine brush stroke across the image
+  useEffect(() => {
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (!isTouchDevice) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    // Wait for canvas to be sized
+    const delay = setTimeout(() => {
+      const { w, h } = dimsRef.current;
+      if (w === 0 || h === 0) return;
+
+      const rows = 6;
+      const stepsPerRow = 40;
+      const totalSteps = rows * stepsPerRow;
+      let step = 0;
+
+      const interval = setInterval(() => {
+        if (step >= totalSteps) {
+          clearInterval(interval);
+          return;
+        }
+        const row = Math.floor(step / stepsPerRow);
+        const col = step % stepsPerRow;
+        const x = row % 2 === 0
+          ? (col / (stepsPerRow - 1)) * w
+          : w - (col / (stepsPerRow - 1)) * w;
+        const y = ((row + 0.5) / rows) * h;
+        addStamp(x, y);
+        lastPosRef.current = { x, y };
+        startLoop();
+        step++;
+      }, 30);
+
+      return () => clearInterval(interval);
+    }, 300);
+
+    return () => clearTimeout(delay);
+  }, [addStamp, startLoop]);
+
   const getRelativePos = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     return { x: e.clientX - rect.left, y: e.clientY - rect.top };
