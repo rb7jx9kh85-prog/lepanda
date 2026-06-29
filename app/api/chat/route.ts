@@ -83,10 +83,9 @@ ${carte}
 PLATS DE LA SEMAINE :
 ${platsSemaine}
 
-RÉSERVATION : Collecte uniquement 3 infos (une à la fois) : nom, nombre de personnes, téléphone.
-Date/heure : facultatives — ne les demande pas d'office.
-Dès que tu as les 3 infos, réponds UNIQUEMENT avec ce JSON (rien d'autre) :
-{"reservation":true,"name":"Prénom Nom","personnes":"N","telephone":"numéro","date":"YYYY-MM-DD ou vide","heure":"HHhMM ou vide","message":""}`;
+RÉSERVATION : Collecte obligatoirement 5 informations (une question à la fois, dans cet ordre) : date souhaitée, heure, nombre de personnes, nom complet, téléphone.
+Ne génère le JSON QUE quand tu as les 5. Réponds alors UNIQUEMENT avec ce JSON (rien d'autre) :
+{"reservation":true,"name":"Prénom Nom","personnes":"N","telephone":"numéro","date":"YYYY-MM-DD","heure":"HHhMM","message":""}`;
 }
 
 interface ChatMessage {

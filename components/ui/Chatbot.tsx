@@ -33,6 +33,10 @@ export function Chatbot() {
   }, [history, typing]);
 
   async function sendReservation(data: Record<string, string>) {
+    if (!data.name || !data.telephone || !data.personnes || !data.date || !data.heure) {
+      setHistory((h) => [...h, { role: 'assistant', content: `Il me manque des informations. Pouvez-vous me redonner la date, l'heure, le nombre de personnes, votre nom et votre numéro de téléphone ?` }]);
+      return;
+    }
     setHistory((h) => [...h, { role: 'assistant', content: `Parfait, j'envoie votre réservation… 📅` }]);
     try {
       await addDoc(collection(db, 'restaurants', 'panda_leytron', 'reservations'), {
