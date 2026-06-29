@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send } from 'lucide-react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { RESTAURANT } from '@/lib/restaurant';
 
 interface Msg {
@@ -32,42 +34,27 @@ export function Chatbot() {
 
   async function sendReservation(data: Record<string, string>) {
     setHistory((h) => [...h, { role: 'assistant', content: `Parfait, j'envoie votre réservation… 📅` }]);
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
-    if (!accessKey) {
-      setHistory((h) => [...h, { role: 'assistant', content: `Formulaire indisponible. Appelez-nous au ${RESTAURANT.telephone}.` }]);
-      return;
-    }
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: accessKey,
-          subject: `Nouvelle réservation (chatbot) – ${data.name} · ${data.date || 'date à définir'} ${data.heure || ''} · ${data.personnes} pers.`,
-          from_name: 'Réservations Le Panda',
-          Nom: data.name,
-          Téléphone: data.telephone,
-          Personnes: data.personnes,
-          Date: data.date || 'À définir',
-          Heure: data.heure || 'À définir',
-          Message: data.message || '—',
-          Source: 'chatbot',
-          botcheck: '',
-        }),
+      await addDoc(collection(db, 'restaurants', 'panda_leytron', 'reservations'), {
+        nom:          data.name,
+        telephone:    data.telephone,
+        email:        data.email || '',
+        date:         data.date || '',
+        heure:        data.heure || '',
+        nb_personnes: Number(data.personnes),
+        message:      data.message || '',
+        statut:       'en_attente',
+        source:       'chatbot',
+        cree_le:      serverTimestamp(),
       });
-      const result = await res.json();
-      if (res.ok && result.success) {
-        const creneau = data.date && data.heure ? ` pour le ${data.date} à ${data.heure}` : '';
-        setHistory((h) => [
-          ...h,
-          {
-            role: 'assistant',
-            content: `✅ C'est noté, ${data.name} ! Votre demande de réservation pour ${data.personnes} personne(s)${creneau} est enregistrée. Nous vous rappelons très vite au ${data.telephone} pour confirmer. À bientôt 🐼`,
-          },
-        ]);
-      } else {
-        throw new Error();
-      }
+      const creneau = data.date && data.heure ? ` pour le ${data.date} à ${data.heure}` : '';
+      setHistory((h) => [
+        ...h,
+        {
+          role: 'assistant',
+          content: `✅ C'est noté, ${data.name} ! Votre demande de réservation pour ${data.personnes} personne(s)${creneau} est enregistrée. Nous vous rappelons très vite au ${data.telephone} pour confirmer. À bientôt 🐼`,
+        },
+      ]);
     } catch {
       setHistory((h) => [
         ...h,
