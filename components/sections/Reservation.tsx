@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db, RESTAURANT_ID } from '@/lib/firebase';
+import { getClosedDates } from '@/lib/firestore';
 import { Reveal } from '@/components/ui/Reveal';
 import { GlowAccent } from '@/components/ui/GlowAccent';
 import { RESTAURANT } from '@/lib/restaurant';
@@ -36,8 +37,21 @@ export function Reservation() {
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState('');
+  const [closedDates, setClosedDates] = useState<string[]>([]);
 
   const jours = prochainsJours(5);
+
+  useEffect(() => {
+    const loadClosed = async () => {
+      try {
+        const closed = await getClosedDates();
+        setClosedDates(closed);
+      } catch (err) {
+        console.error('Erreur chargement jours fermés:', err);
+      }
+    };
+    loadClosed();
+  }, []);
 
   function next() {
     setError('');
@@ -126,18 +140,28 @@ export function Reservation() {
                     <>
                       <p className="mb-2.5 text-[0.78rem] font-medium text-[#6b5c40]">Date</p>
                       <div className="mb-6 flex flex-wrap gap-2">
-                        {jours.map((j) => (
-                          <button
-                            key={j.iso}
-                            onClick={() => setDate(j.iso)}
-                            className={`flex min-w-[68px] flex-1 flex-col items-center rounded-xl border-2 px-2 py-3 transition-all ${
-                              date === j.iso ? 'border-[#D4956A] bg-[#D4956A] text-white' : 'border-transparent bg-[#f5f0e8] text-[#3a2c1a] hover:bg-[#ede5d4]'
-                            }`}
-                          >
-                            <span className="text-[0.82rem] font-semibold">{j.label}</span>
-                            <span className={`text-[0.72rem] ${date === j.iso ? 'text-white' : 'text-[#8a7060]'}`}>{j.mois}</span>
-                          </button>
-                        ))}
+                        {jours.map((j) => {
+                          const isClosed = closedDates.includes(j.iso);
+                          return (
+                            <button
+                              key={j.iso}
+                              onClick={() => !isClosed && setDate(j.iso)}
+                              disabled={isClosed}
+                              className={`flex min-w-[68px] flex-1 flex-col items-center rounded-xl border-2 px-2 py-3 transition-all ${
+                                isClosed
+                                  ? 'border-rouge/30 bg-rouge/10 text-rouge/50 cursor-not-allowed'
+                                  : date === j.iso
+                                  ? 'border-[#D4956A] bg-[#D4956A] text-white'
+                                  : 'border-transparent bg-[#f5f0e8] text-[#3a2c1a] hover:bg-[#ede5d4]'
+                              }`}
+                            >
+                              <span className="text-[0.82rem] font-semibold">{isClosed ? '❌' : j.label}</span>
+                              <span className={`text-[0.72rem] ${date === j.iso ? 'text-white' : isClosed ? 'text-rouge/50' : 'text-[#8a7060]'}`}>
+                                {isClosed ? 'Fermé' : j.mois}
+                              </span>
+                            </button>
+                          );
+                        })}
                       </div>
                     </>
                   )}
