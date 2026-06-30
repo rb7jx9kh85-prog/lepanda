@@ -11,6 +11,7 @@ import { FacebookSection } from '@/components/sections/FacebookSection';
 import { Footer } from '@/components/sections/Footer';
 import { Chatbot } from '@/components/ui/Chatbot';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
+import { WelcomePopup } from '@/components/ui/WelcomePopup';
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
       </main>
       <Footer />
       <Chatbot />
+      <WelcomePopup />
     </>
   );
 }
