@@ -9,7 +9,7 @@ import { Reveal } from '@/components/ui/Reveal';
 import { GlowAccent } from '@/components/ui/GlowAccent';
 import { RESTAURANT } from '@/lib/restaurant';
 
-const HEURES = ['11h30', '12h00', '12h30', '13h00', '18h30', '19h00', '19h30', '20h00', '20h30', '21h00'];
+const HEURES = ['11:30', '12:00', '12:30', '13:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'];
 
 function prochainsJours(n: number) {
   const jours = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
@@ -18,7 +18,7 @@ function prochainsJours(n: number) {
     const d = new Date();
     d.setDate(d.getDate() + i);
     return {
-      iso: d.toISOString().split('T')[0],
+      iso: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`,
       label: i === 0 ? 'Auj.' : `${jours[d.getDay()]}. ${d.getDate()}`,
       mois: mois[d.getMonth()],
     };
