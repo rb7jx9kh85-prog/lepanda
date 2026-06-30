@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db, RESTAURANT_ID } from '@/lib/firebase';
 import { Reveal } from '@/components/ui/Reveal';
 import { GlowAccent } from '@/components/ui/GlowAccent';
 import { RESTAURANT } from '@/lib/restaurant';
@@ -40,46 +42,31 @@ export function Reservation() {
   function next() {
     setError('');
     if (step === 1 && !date) return setError('Veuillez choisir une date.');
-    if (step === 2 && (!heure || !personnes)) return setError('Choisissez l’heure et le nombre de personnes.');
+    if (step === 2 && (!heure || !personnes)) return setError('Choisissez l'heure et le nombre de personnes.');
     setStep((s) => s + 1);
   }
 
   async function submit() {
     if (!name || !tel) return setError('Nom et téléphone obligatoires.');
 
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
-    if (!accessKey) {
-      return setError(`Formulaire indisponible. Appelez le ${RESTAURANT.telephone}.`);
-    }
-
     setSending(true);
     setError('');
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: accessKey,
-          subject: `Nouvelle réservation – ${name} · ${date || 'date à définir'} ${heure} · ${personnes} pers.`,
-          from_name: 'Réservations Le Panda',
-          // Champs lisibles dans l'email Web3Forms
-          Nom: name,
-          Téléphone: tel,
-          Email: email || '—',
-          Date: date || 'À définir (rappeler le client)',
-          Heure: heure || 'À définir',
-          Personnes: personnes,
-          Message: message || '—',
-          replyto: email || undefined,
-          botcheck: '',
-        }),
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setDone(true);
-      } else {
-        setError(`Erreur d’envoi. Appelez le ${RESTAURANT.telephone}.`);
-      }
+      await addDoc(
+        collection(db, 'restaurants', RESTAURANT_ID, 'reservations'),
+        {
+          nom: name,
+          telephone: tel,
+          email: email || '',
+          date: date || '',
+          heure: heure || '',
+          nb_personnes: Number(personnes),
+          message: message || '',
+          statut: 'en_attente',
+          cree_le: serverTimestamp(),
+        }
+      );
+      setDone(true);
     } catch {
       setError(`Erreur réseau. Appelez le ${RESTAURANT.telephone}.`);
     } finally {
@@ -128,7 +115,7 @@ export function Reservation() {
                   <p className="text-sm leading-relaxed text-[#6b5c40]">
                     Merci ! Nous avons bien reçu votre demande et vous confirmerons très
                     rapidement.<br />
-                    <br />En cas d’urgence : <a href={`tel:${RESTAURANT.telephoneRaw}`} className="font-semibold text-[#D4956A]">{RESTAURANT.telephone}</a>
+                    <br />En cas d'urgence : <a href={`tel:${RESTAURANT.telephoneRaw}`} className="font-semibold text-[#D4956A]">{RESTAURANT.telephone}</a>
                   </p>
                 </motion.div>
               ) : (
