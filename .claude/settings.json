@@ -1,6 +1,4 @@
 {
-  "allowedRepositories": [
-    "rb7jx9kh85-prog/app_panda2",
-    "rb7jx9kh85-prog/lepanda"
-  ]
+  "githubToken": "ghp_xxxxx"
 }
+
