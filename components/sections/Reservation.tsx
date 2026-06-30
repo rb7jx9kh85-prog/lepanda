@@ -42,7 +42,7 @@ export function Reservation() {
   function next() {
     setError('');
     if (step === 1 && !date) return setError('Veuillez choisir une date.');
-    if (step === 2 && (!heure || !personnes)) return setError('Choisissez l'heure et le nombre de personnes.');
+    if (step === 2 && (!heure || !personnes)) return setError("Choisissez l'heure et le nombre de personnes.");
     setStep((s) => s + 1);
   }
 

@@ -21,6 +21,8 @@ const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 
+export const RESTAURANT_ID = 'panda_leytron';
+
 /** Identifiant du restaurant dans Firestore. */
 export const MENU_DOC_PATH = ['restaurants', 'panda_leytron', 'live', 'current'] as const;
 
